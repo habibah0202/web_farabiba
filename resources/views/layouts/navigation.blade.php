@@ -23,6 +23,14 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            @if (Auth::user()->foto)
+                                <img src="{{ Storage::url(Auth::user()->foto) }}" alt="Foto profil" class="me-2 h-8 w-8 rounded-full object-cover ring-2 ring-gray-200">
+                            @else
+                                <div class="me-2 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -74,8 +82,16 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+            <div class="flex items-center gap-3 px-4">
+                @if (Auth::user()->foto)
+                    <img src="{{ Storage::url(Auth::user()->foto) }}" alt="Foto profil" class="h-10 w-10 rounded-full object-cover ring-2 ring-gray-200">
+                @else
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-base font-semibold text-indigo-700">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    </div>
+                @endif
+                <div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
