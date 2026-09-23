@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        $target = $user && $user->email === 'farbib@gmail.com'
+            ? route('dashboard', absolute: false)
+            : route('customer.index', absolute: false);
+
+        return redirect($target);
     }
 
     /**

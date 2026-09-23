@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    color-scheme: light;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f7f1ea;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+button {
+    transition: all 0.2s ease;
+}
+
