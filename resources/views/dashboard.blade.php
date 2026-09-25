@@ -194,8 +194,8 @@
                             </button>
                         </div>
 
-                        <div class="mt-6 overflow-hidden rounded-2xl border border-[#eadcc9]">
-                            <table class="min-w-full divide-y divide-[#f0e3d8] text-left text-sm text-[#3f3129]">
+                        <div class="mt-6 overflow-x-auto rounded-2xl border border-[#eadcc9]">
+                            <table class="min-w-[620px] divide-y divide-[#f0e3d8] text-left text-sm text-[#3f3129]">
                                 <thead class="bg-[#f9f4ef] text-[#6f5d55]">
                                     <tr>
                                         <th class="px-4 py-3 font-medium">Nama Produk</th>

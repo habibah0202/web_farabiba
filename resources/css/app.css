@@ -6,9 +6,33 @@
     color-scheme: light;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', sans-serif;
     background: #f7f1ea;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
 }
 
 h1, h2, h3 {
@@ -17,5 +41,16 @@ h1, h2, h3 {
 
 button {
     transition: all 0.2s ease;
+}
+
+@media (max-width: 640px) {
+    body {
+        font-size: 15px;
+    }
+
+    h1, h2, h3 {
+        line-height: 1.1;
+        word-break: break-word;
+    }
 }
 

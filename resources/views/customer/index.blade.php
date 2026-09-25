@@ -14,11 +14,11 @@
 
         <div class="min-h-screen bg-[#f6f3ee] text-[#2a211b]" x-data="{ profileOpen: false }" @click.outside="profileOpen = false">
             <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-                <header class="mb-8 flex items-center justify-between border-b border-[#e5d8cb] pb-4">
-                    <div class="flex items-center gap-3">
+                <header class="mb-8 flex flex-col gap-3 border-b border-[#e5d8cb] pb-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex min-w-0 items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#2d241d] text-lg font-semibold text-[#f7efe9]">G</div>
                         <div>
-                            <div class="font-serif text-3xl tracking-tight text-[#2d241d]">GlowCare</div>
+                            <div class="font-serif text-2xl tracking-tight text-[#2d241d] sm:text-3xl">GlowCare</div>
                         </div>
                     </div>
 
@@ -29,9 +29,9 @@
                         <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Riwayat</a>
                     </nav>
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex w-full items-center justify-end gap-2 sm:w-auto sm:gap-3">
                         @php($cartCount = \App\Models\Cart::where('user_id', Auth::id())->sum('quantity'))
-                        <a href="{{ route('customer.cart') }}" class="relative inline-flex items-center justify-center rounded-full border border-[#d9c7b5] bg-white p-2.5 text-[#2d241d] shadow-sm transition hover:bg-[#f7f1ea]" aria-label="Keranjang">
+                        <a href="{{ route('customer.cart') }}" class="relative inline-flex shrink-0 items-center justify-center rounded-full border border-[#d9c7b5] bg-white p-2.5 text-[#2d241d] shadow-sm transition hover:bg-[#f7f1ea]" aria-label="Keranjang">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.2 9.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L20 7H7" />
                                 <circle cx="10" cy="18" r="1.4" />
@@ -43,11 +43,11 @@
                         </a>
 
                         <div class="relative z-20" x-data="{ open: false }">
-                            <button type="button" @click="open = !open" class="inline-flex items-center gap-2 rounded-full bg-[#2d241d] px-3 py-2 text-sm font-medium text-white">
-                                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#f1e9df] text-xs font-semibold text-[#2d241d]">
+                            <button type="button" @click="open = !open" class="inline-flex max-w-[11rem] items-center gap-2 rounded-full bg-[#2d241d] px-3 py-2 text-sm font-medium text-white">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f1e9df] text-xs font-semibold text-[#2d241d]">
                                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                 </span>
-                                <span>{{ Auth::user()->name }}</span>
+                                <span class="truncate">{{ Auth::user()->name }}</span>
                             </button>
 
                             <div x-show="open" x-cloak class="absolute right-0 top-full z-50 mt-2 w-52 rounded-2xl border border-[#eadcc9] bg-white p-2 shadow-lg" @click.outside="open = false">

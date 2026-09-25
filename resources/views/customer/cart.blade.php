@@ -78,17 +78,17 @@
                     <div class="space-y-5">
                         @foreach ($cart as $item)
                             <div class="flex flex-col gap-4 rounded-[1.6rem] border border-[#e7d9cb] bg-[#f9f4ef] p-5 shadow-sm md:flex-row md:items-center md:justify-between">
-                                <div>
+                                <div class="min-w-0">
                                     <h2 class="font-serif text-2xl text-[#2d241d]">{{ $item['name'] }}</h2>
                                     <p class="mt-1 text-sm text-[#5d4d45]">Rp {{ number_format($item['price'], 0, ',', '.') }} / item</p>
                                 </div>
 
-                                <div class="flex items-center gap-3">
-                                    <form method="POST" action="{{ route('customer.cart.update', $item['id']) }}">
+                                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                                    <form method="POST" action="{{ route('customer.cart.update', $item['id']) }}" class="flex flex-wrap items-center gap-2">
                                         @csrf
                                         @method('PATCH')
                                         <input type="number" name="quantity" min="1" value="{{ $item['quantity'] }}" class="w-20 rounded-full border border-[#d9c7b5] bg-white px-3 py-2 text-center text-sm text-[#2d241d] focus:border-[#2d241d] focus:outline-none" />
-                                        <button type="submit" class="ml-2 rounded-full border border-[#d9c7b5] bg-white px-3 py-2 text-sm font-medium text-[#2d241d]">Update</button>
+                                        <button type="submit" class="rounded-full border border-[#d9c7b5] bg-white px-3 py-2 text-sm font-medium text-[#2d241d]">Update</button>
                                     </form>
 
                                     <form method="POST" action="{{ route('customer.cart.remove', $item['id']) }}">
@@ -102,11 +102,11 @@
                     </div>
 
                     <div class="mt-8 rounded-[1.8rem] border border-[#e7d9cb] bg-white p-6 shadow-sm">
-                        <div class="flex items-center justify-between text-lg font-medium text-[#2d241d]">
+                        <div class="flex flex-col gap-2 text-lg font-medium text-[#2d241d] sm:flex-row sm:items-center sm:justify-between">
                             <span>Total</span>
                             <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
                         </div>
-                        <a href="{{ route('customer.checkout') }}" class="mt-5 inline-block rounded-full bg-[#2d241d] px-6 py-3 text-sm font-medium text-white">Checkout</a>
+                        <a href="{{ route('customer.checkout') }}" class="mt-5 inline-block w-full rounded-full bg-[#2d241d] px-6 py-3 text-center text-sm font-medium text-white sm:w-auto">Checkout</a>
                     </div>
                 @endif
             </div>
