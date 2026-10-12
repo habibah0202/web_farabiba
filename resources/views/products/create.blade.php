@@ -5,7 +5,7 @@
             <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Tambah Produk</h1>
         </div>
 
-        <form action="{{ route('products.store') }}" method="POST" class="rounded-[2rem] border border-[#eadcc9] bg-white p-6 shadow-sm">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" class="rounded-[2rem] border border-[#eadcc9] bg-white p-6 shadow-sm">
             @csrf
             <div class="grid gap-5 md:grid-cols-2">
                 <div class="md:col-span-2">
@@ -25,6 +25,12 @@
                     @error('category_id') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
                 </div>
 
+                <div class="md:col-span-2">
+                    <label for="image" class="mb-1 block text-sm font-medium text-[#3f3129]">Foto Produk</label>
+                    <input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp" class="w-full rounded-xl border border-[#e1d2c0] bg-[#faf7f4] px-3 py-2.5 text-sm text-[#3f3129] file:mr-4 file:rounded-full file:border-0 file:bg-[#2d241d] file:px-4 file:py-2 file:text-sm file:font-medium file:text-white" required>
+                    <p class="mt-1 text-xs text-[#7d685f]">Format JPG, PNG, atau WebP. Maksimal 2 MB.</p>
+                    @error('image') <span class="mt-1 block text-xs text-red-600">{{ $message }}</span> @enderror
+                </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-[#3f3129]">Harga</label>
                     <input type="number" name="price" value="{{ old('price') }}" class="w-full rounded-xl border border-[#e1d2c0] bg-[#faf7f4] px-3 py-2.5 focus:border-[#2d241d] focus:outline-none" required>

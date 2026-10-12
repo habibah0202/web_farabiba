@@ -20,7 +20,7 @@
                         <a href="{{ route('customer.index') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.index') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Home</a>
                         <a href="{{ route('customer.categories') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.categories') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Kategori Produk</a>
                         <a href="{{ route('customer.search') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.search') || request()->routeIs('customer.filter') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Pencarian Produk</a>
-                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Riwayat</a>
+                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Pelacakan</a>
                     </nav>
 
                     <div class="flex items-center gap-3">
@@ -61,7 +61,7 @@
             <div class="mx-auto max-w-6xl px-4 pb-8 sm:px-6 lg:px-8">
                 <div class="mb-6">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7d685f]">Transaksi</p>
-                    <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Riwayat Transaksi</h1>
+                    <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Pelacakan Pesanan</h1>
                 </div>
 
                 @if (empty($transactions))
@@ -75,11 +75,11 @@
                                 <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                                     <div>
                                         <div class="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#7b675d]">{{ $transaction['invoice'] }}</div>
-                                        <h2 class="mt-2 font-serif text-2xl text-[#2d241d]">{{ $transaction['status'] }}</h2>
+                                        <h2 class="mt-2 font-serif text-2xl text-[#2d241d]">{{ $transaction['order_status_label'] }}</h2>
                                     </div>
                                     <div class="text-right">
                                         <div class="text-lg font-semibold text-[#2d241d]">Rp {{ number_format($transaction['total'], 0, ',', '.') }}</div>
-                                        <a href="{{ route('customer.transactions.show', $transaction['id']) }}" class="mt-2 inline-block text-sm font-medium text-[#2d241d]">Lihat detail</a>
+                                        <a href="{{ route('customer.transactions.show', $transaction['id']) }}" class="mt-2 inline-block text-sm font-medium text-[#2d241d]">Lacak pesanan</a>
                                     </div>
                                 </div>
                             </div>

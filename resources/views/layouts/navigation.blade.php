@@ -5,6 +5,7 @@
         ->get()
         ->map(function ($transaction) {
             return [
+                'id' => 'transaction-' . $transaction->id,
                 'type' => 'purchase',
                 'title' => 'Pembelian baru',
                 'detail' => $transaction->invoice . ' • Rp ' . number_format((float) $transaction->total, 0, ',', '.'),
@@ -21,6 +22,7 @@
         ->get()
         ->map(function ($user) {
             return [
+                'id' => 'customer-' . $user->id,
                 'type' => 'customer',
                 'title' => 'Pelanggan baru',
                 'detail' => $user->name . ' bergabung ke akun pelanggan.',
@@ -74,8 +76,8 @@
                         <a href="{{ route('admin.customers.index') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] transition hover:bg-[#f7f1ea] {{ request()->routeIs('admin.customers.index') ? 'bg-[#f7f1ea] font-medium' : '' }}">
                             Kelola Profil Pelanggan
                         </a>
-                        <a href="{{ route('admin.customers.transactions') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] transition hover:bg-[#f7f1ea] {{ request()->routeIs('admin.customers.transactions') ? 'bg-[#f7f1ea] font-medium' : '' }}">
-                            Riwayat Transaksi
+                        <a href="{{ route('admin.orders.tracking') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] transition hover:bg-[#f7f1ea] {{ request()->routeIs('admin.orders.tracking') ? 'bg-[#f7f1ea] font-medium' : '' }}">
+                            Pelacakan Pesanan
                         </a>
                     </div>
                 </div>
@@ -106,20 +108,16 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
                 </button>
 
-                <div class="relative" x-data="{ open: false }">
-                    <button type="button" @click="notifOpen = !notifOpen" @click.outside="notifOpen = false" class="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#e6d9c9] bg-white text-[#3a2f2a] shadow-sm transition hover:bg-[#f7efe8]">
+                <div class="relative" x-data="notificationMenu(@js($notifications->pluck('id')->values()), 'glowcare-read-notifications-{{ Auth::id() }}')" @click.outside="notifOpen = false">
+                    <button type="button" @click="toggle()" class="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#e6d9c9] bg-white text-[#3a2f2a] shadow-sm transition hover:bg-[#f7efe8]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                        @if ($notifications->isNotEmpty())
-                            <span class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#b4562d] px-1 text-[10px] font-semibold text-white">
-                                {{ $notifications->count() }}
-                            </span>
-                        @endif
+                        <span x-show="unreadCount > 0" x-text="unreadCount" class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#b4562d] px-1 text-[10px] font-semibold text-white"></span>
                     </button>
 
                     <div x-show="notifOpen" x-transition class="absolute right-0 z-30 mt-3 w-80 rounded-2xl border border-[#eadcc9] bg-white p-3 shadow-xl" style="display: none;">
                         <div class="mb-2 flex items-center justify-between px-2">
                             <span class="text-sm font-semibold text-[#2d241d]">Notifikasi</span>
-                            <span class="text-[10px] uppercase tracking-[0.2em] text-[#7d685f]">{{ $notifications->count() }} baru</span>
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-[#7d685f]" x-text="unreadCount + ' baru'"></span>
                         </div>
 
                         <div class="max-h-80 space-y-2 overflow-y-auto">
@@ -199,7 +197,7 @@
                 <div class="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#7d685f]">Pelanggan</div>
                 <div class="space-y-1 pl-2">
                     <a href="{{ route('admin.customers.index') }}" class="block rounded-lg px-2 py-2 text-sm text-[#5f5148] hover:bg-[#f0e7de] {{ request()->routeIs('admin.customers.index') ? 'bg-[#f0e7de] font-medium' : '' }}">Kelola Profil Pelanggan</a>
-                    <a href="{{ route('admin.customers.transactions') }}" class="block rounded-lg px-2 py-2 text-sm text-[#5f5148] hover:bg-[#f0e7de] {{ request()->routeIs('admin.customers.transactions') ? 'bg-[#f0e7de] font-medium' : '' }}">Riwayat Transaksi</a>
+                    <a href="{{ route('admin.orders.tracking') }}" class="block rounded-lg px-2 py-2 text-sm text-[#5f5148] hover:bg-[#f0e7de] {{ request()->routeIs('admin.orders.tracking') ? 'bg-[#f0e7de] font-medium' : '' }}">Pelacakan Pesanan</a>
                 </div>
             </div>
             <div class="rounded-xl px-3 py-2">

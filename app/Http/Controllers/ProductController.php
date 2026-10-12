@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -53,7 +54,11 @@ class ProductController extends Controller
             'stock' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
             'status' => ['required', 'in:active,inactive'],
+            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+
+        $validated['image_path'] = $request->file('image')->store('products', 'public');
+        unset($validated['image']);
 
         Product::create($validated);
 
@@ -82,15 +87,30 @@ class ProductController extends Controller
             'stock' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
             'status' => ['required', 'in:active,inactive'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
+        if ($request->hasFile('image')) {
+            $oldImagePath = $product->image_path;
+            $validated['image_path'] = $request->file('image')->store('products', 'public');
+            unset($validated['image']);
+        }
+
         $product->update($validated);
+
+        if (isset($oldImagePath)) {
+            Storage::disk('public')->delete($oldImagePath);
+        }
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
     public function destroy(Product $product): RedirectResponse
     {
+        if ($product->image_path) {
+            Storage::disk('public')->delete($product->image_path);
+        }
+
         $product->delete();
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus.');

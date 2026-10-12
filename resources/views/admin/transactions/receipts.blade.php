@@ -5,9 +5,7 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7d685f]">Transaksi</p>
                 <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Detail Transaksi &amp; Struk</h1>
             </div>
-            <button type="button" class="rounded-full border border-[#d9c5b4] bg-[#f7f1ea] px-5 py-3 text-sm font-medium text-[#2d241d] shadow-sm">
-                Struk Cetak
-            </button>
+
         </div>
 
         <div class="space-y-6">
@@ -21,6 +19,9 @@
                         <span class="rounded-full px-2.5 py-1 text-xs font-medium {{ $transaction['status'] === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700' }}">
                             {{ $transaction['status'] }}
                         </span>
+                        <a href="{{ route('admin.transactions.receipt', $transaction['id']) }}" class="inline-flex items-center rounded-full bg-[#2d241d] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#1d1815]">
+                            Lihat / Cetak Struk
+                        </a>
                     </div>
 
                     <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

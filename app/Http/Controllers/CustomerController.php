@@ -174,6 +174,7 @@ class CustomerController extends Controller
             'invoice' => 'INV-'.now()->format('YmdHis'),
             'total' => $total,
             'status' => 'Lunas',
+            'order_status' => 'packed',
             'items' => $items,
         ]);
 
@@ -193,6 +194,8 @@ class CustomerController extends Controller
                 'customer' => $transaction->customer,
                 'total' => (float) $transaction->total,
                 'status' => $transaction->status,
+                'order_status' => $transaction->order_status,
+                'order_status_label' => Transaction::ORDER_STATUSES[$transaction->order_status] ?? 'Status tidak diketahui',
                 'created_at' => $transaction->created_at->toDateTimeString(),
                 'items' => $transaction->items ?? [],
             ])
@@ -205,13 +208,22 @@ class CustomerController extends Controller
     {
         $transaction = Transaction::where('user_id', Auth::id())->findOrFail($id);
 
-        return view('customer.transaction-detail', ['transaction' => [
-            'id' => $transaction->id,
-            'invoice' => $transaction->invoice,
-            'status' => $transaction->status,
-            'total' => (float) $transaction->total,
-            'items' => $transaction->items ?? [],
-        ]]);
+        $trackingSteps = Transaction::ORDER_STATUSES;
+        $currentStep = array_search($transaction->order_status ?? 'packed', array_keys($trackingSteps), true);
+        $currentStep = $currentStep === false ? 0 : $currentStep;
+
+        return view('customer.transaction-detail', [
+            'transaction' => [
+                'id' => $transaction->id,
+                'invoice' => $transaction->invoice,
+                'status' => $transaction->status,
+                'order_status' => $transaction->order_status,
+                'total' => (float) $transaction->total,
+                'items' => $transaction->items ?? [],
+            ],
+            'trackingSteps' => $trackingSteps,
+            'currentStep' => $currentStep,
+        ]);
     }
 
     public function profile(): View

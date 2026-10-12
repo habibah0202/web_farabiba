@@ -20,7 +20,7 @@
                         <a href="{{ route('customer.index') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.index') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Home</a>
                         <a href="{{ route('customer.search') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.search') || request()->routeIs('customer.filter') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Produk</a>
                         <a href="{{ route('customer.categories') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.categories') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Kategori Produk</a>
-                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Riwayat</a>
+                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Pelacakan</a>
                     </nav>
 
                     <div class="flex items-center gap-3">
@@ -88,6 +88,7 @@
                 <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     @forelse ($products as $product)
                         <div class="rounded-[1.7rem] border border-[#e7d9cb] bg-[#f9f4ef] p-5 shadow-sm">
+                                    <x-product-image :product="$product" image-class="mb-4 h-52 w-full rounded-2xl object-cover" />
                             <div class="mb-4 flex items-center justify-between">
                                 <span class="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7b675d]">{{ $product->category?->name ?? 'Skincare' }}</span>
                                 <span class="text-sm font-medium text-[#2d241d]">{{ $product->stock }} stok</span>

@@ -1,11 +1,35 @@
 <x-app-layout>
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+<style>
+    @media print {
+        @page { size: A4 landscape; margin: 12mm; }
+        nav, .print-hide, .report-summary-cards { display: none !important; }
+        body, .min-h-screen { background: #fff !important; }
+        .report-print-area {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .report-table-container, .report-table-overflow {
+            overflow: visible !important;
+            box-shadow: none !important;
+        }
+        .report-table-container { border-radius: 0 !important; }
+        .report-table-container table { width: 100% !important; }
+        .report-table-container th, .report-table-container td {
+            padding: 6px 8px !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
+</style>
+    <div class="report-print-area mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
                 <p class="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7d685f]">Laporan</p>
                 <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Laporan Penjualan</h1>
             </div>
-            <button type="button" onclick="window.print()" class="rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
+            <button type="button" onclick="window.print()" class="print-hide rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
                 Cetak PDF
             </button>
         </div>
@@ -29,14 +53,14 @@
                     </select>
                 </div>
                 <div class="flex items-end">
-                    <button type="submit" class="w-full rounded-xl bg-[#2d241d] px-4 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
+                    <button type="submit" class="print-hide w-full rounded-xl bg-[#2d241d] px-4 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
                         Filter
                     </button>
                 </div>
             </div>
         </form>
 
-        <div class="mb-6 grid gap-4 md:grid-cols-3">
+        <div class="report-summary-cards mb-6 grid gap-4 md:grid-cols-3">
             <div class="rounded-[1.5rem] border border-[#eadcc9] bg-[#f9f4ef] p-5">
                 <div class="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#7d685f]">Harian</div>
                 <div class="mt-3 text-2xl font-semibold text-[#2d241d]">Rp {{ number_format((float) ($dailyRevenue ?? 0), 0, ',', '.') }}</div>
@@ -51,8 +75,8 @@
             </div>
         </div>
 
-        <div class="overflow-hidden rounded-[2rem] border border-[#eadcc9] bg-white shadow-sm">
-            <div class="overflow-x-auto">
+        <div class="report-table-container overflow-hidden rounded-[2rem] border border-[#eadcc9] bg-white shadow-sm">
+            <div class="report-table-overflow overflow-x-auto">
                 <table class="min-w-full divide-y divide-[#f0e3d8] text-left text-sm text-[#3f3129]">
                     <thead class="bg-[#f9f4ef] text-[#6f5d55]">
                         <tr>

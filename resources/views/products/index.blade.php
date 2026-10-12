@@ -86,7 +86,9 @@
 
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($products as $product)
-                <article class="rounded-[1.75rem] border {{ $product->stock <= 10 ? 'border-red-200 bg-red-50/40' : 'border-[#eadcc9] bg-white' }} p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <article class="overflow-hidden rounded-[1.75rem] border {{ $product->stock <= 10 ? 'border-red-200 bg-red-50/40' : 'border-[#eadcc9] bg-white' }} shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                    <x-product-image :product="$product" image-class="h-52 w-full object-cover" />
+                    <div class="p-5">
                     <div class="flex items-center justify-between gap-3">
                         <span class="rounded-full bg-[#f5e7dc] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6a564d]">
                             {{ $product->category?->name ?? 'Tanpa Kategori' }}
@@ -127,6 +129,7 @@
                             @method('DELETE')
                             <button type="submit" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600">Hapus</button>
                         </form>
+                    </div>
                     </div>
                 </article>
             @empty

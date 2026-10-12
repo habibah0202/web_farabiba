@@ -20,7 +20,7 @@
                         <a href="{{ route('customer.index') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.index') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Home</a>
                         <a href="{{ route('customer.categories') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.categories') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Kategori Produk</a>
                         <a href="{{ route('customer.search') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.search') || request()->routeIs('customer.filter') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Pencarian Produk</a>
-                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Riwayat</a>
+                        <a href="{{ route('customer.transactions') }}" class="border-b-2 border-transparent pb-1 transition hover:border-[#2d241d] hover:text-[#2d241d] {{ request()->routeIs('customer.transactions') || request()->routeIs('customer.transactions.show') ? 'border-[#2d241d] text-[#2d241d]' : '' }}">Pelacakan</a>
                     </nav>
 
                     <div class="flex items-center gap-3">
@@ -62,6 +62,23 @@
                 <div class="mb-6">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7d685f]">Detail transaksi</p>
                     <h1 class="mt-2 break-all font-serif text-4xl text-[#2d241d]">{{ $transaction['invoice'] ?? 'Detail Transaksi' }}</h1>
+                    <div class="mt-6 rounded-2xl border border-[#eadcc9] bg-[#f9f4ef] p-5">
+                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#7d685f]">Pelacakan Pesanan</p>
+                        <ol class="mt-4 space-y-3">
+                            @foreach ($trackingSteps as $stepKey => $stepLabel)
+                                @php($stepIndex = $loop->index)
+                                <li class="flex items-center gap-3">
+                                    <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold {{ $stepIndex <= $currentStep ? 'bg-emerald-600 text-white' : 'bg-[#e9dfd6] text-[#7d685f]' }}">
+                                        {{ $stepIndex < $currentStep ? '✓' : $stepIndex + 1 }}
+                                    </span>
+                                    <span class="text-sm {{ $stepIndex === $currentStep ? 'font-semibold text-[#2d241d]' : 'text-[#6f5d55]' }}">{{ $stepLabel }}</span>
+                                    @if ($stepIndex === $currentStep)
+                                        <span class="ml-auto text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-700">Status saat ini</span>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
                 </div>
 
                 @if ($transaction)

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
+    public const ORDER_STATUSES = [
+        'packed' => 'Sudah Dikemas',
+        'in_delivery' => 'Dalam Pengiriman',
+        'arrived' => 'Pesanan Tiba',
+        'completed' => 'Pesanan Selesai',
+    ];
     /** @use HasFactory<\Database\Factories\TransactionFactory> */
     use HasFactory;
 
@@ -17,6 +23,7 @@ class Transaction extends Model
         'invoice',
         'total',
         'status',
+        'order_status',
         'items',
     ];
 

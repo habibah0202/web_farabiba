@@ -10,15 +10,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'active'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
     Route::get('/admin/customers', [\App\Http\Controllers\AdminCustomerController::class, 'index'])->name('admin.customers.index');
+    Route::patch('/admin/customers/{user}/suspension', [\App\Http\Controllers\AdminCustomerController::class, 'toggleSuspension'])->name('admin.customers.suspension');
+    Route::delete('/admin/customers/{user}', [\App\Http\Controllers\AdminCustomerController::class, 'destroy'])->name('admin.customers.destroy');
     Route::get('/admin/customers/transactions', [\App\Http\Controllers\AdminCustomerController::class, 'transactions'])->name('admin.customers.transactions');
+    Route::get('/admin/transactions/sales/export', [\App\Http\Controllers\AdminTransactionController::class, 'salesPdf'])->name('admin.transactions.sales.pdf');
     Route::get('/admin/transactions/sales', [\App\Http\Controllers\AdminTransactionController::class, 'sales'])->name('admin.transactions.sales');
     Route::get('/admin/transactions/receipts', [\App\Http\Controllers\AdminTransactionController::class, 'receipts'])->name('admin.transactions.receipts');
+    Route::get('/admin/orders/tracking', [\App\Http\Controllers\AdminTransactionController::class, 'tracking'])->name('admin.orders.tracking');
+    Route::patch('/admin/orders/{transaction}/tracking', [\App\Http\Controllers\AdminTransactionController::class, 'updateTracking'])->name('admin.orders.tracking.update');
+    Route::get('/admin/transactions/{transaction}/receipt', [\App\Http\Controllers\AdminTransactionController::class, 'receipt'])->name('admin.transactions.receipt');
     Route::get('/admin/reports', [\App\Http\Controllers\AdminReportController::class, 'index'])->name('admin.reports.index');
 
     Route::resource('products', ProductController::class);
@@ -33,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/transactions', [ProductController::class, 'transactions'])->name('transactions.index');
 });
 
-Route::middleware('auth')->prefix('customer')->name('customer.')->group(function () {
+Route::middleware(['auth', 'active'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/', [CustomerController::class, 'index'])->name('index');
     Route::get('/categories', [CustomerController::class, 'categories'])->name('categories');
     Route::get('/search', [CustomerController::class, 'search'])->name('search');
@@ -50,7 +56,7 @@ Route::middleware('auth')->prefix('customer')->name('customer.')->group(function
     Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

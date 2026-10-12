@@ -5,9 +5,9 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#7d685f]">Transaksi</p>
                 <h1 class="mt-2 font-serif text-4xl text-[#2d241d]">Transaksi Penjualan</h1>
             </div>
-            <button type="button" class="rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
+            <a href="{{ route('admin.transactions.sales.pdf') }}" class="rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-[#f8efe8] shadow-sm hover:bg-[#1d1815]">
                 Export PDF
-            </button>
+            </a>
         </div>
 
         <div class="overflow-hidden rounded-[2rem] border border-[#eadcc9] bg-white shadow-sm">
