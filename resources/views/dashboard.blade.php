@@ -90,7 +90,7 @@
             ['title' => 'Data Pelanggan', 'description' => 'Kelola profil pelanggan dan riwayat transaksi.', 'badge' => 'Customers'],
             ['title' => 'Transaksi Penjualan', 'description' => 'Catat penjualan, pembayaran, dan detail pembelian.', 'badge' => 'Sales'],
             ['title' => 'Detail Transaksi & Struk', 'description' => 'Rincian produk, total pembayaran, dan struk cetak.', 'badge' => 'Receipt'],
-            ['title' => 'Perhitungan Total Otomatis', 'description' => 'Subtotal, diskon, pajak, dan total otomatis.', 'badge' => 'Math'],
+             ['title' => 'Perhitungan Total Otomatis', 'description' => 'Subtotal, diskon, pajak, dan total otomatis.', 'badge' => 'Math'],
             ['title' => 'Laporan Penjualan', 'description' => 'Rekap harian, mingguan, dan bulanan.', 'badge' => 'Report'],
             ['title' => 'Pencarian & Filter', 'description' => 'Cari produk dan transaksi berdasarkan data tertentu.', 'badge' => 'Search'],
             ['title' => 'Laporan Per Periode', 'description' => 'Filter tanggal mulai dan tanggal akhir untuk laporan.', 'badge' => 'Filter'],

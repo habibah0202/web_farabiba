@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="mt-6 flex flex-wrap gap-3">
-                    <a href="{{ route('profile.edit') }}" class="rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-white">Edit Profil</a>
+                    <a href="{{ route('customer.profile.edit') }}" class="rounded-full bg-[#2d241d] px-5 py-3 text-sm font-medium text-white">Edit Profil</a>
                     <a href="{{ route('customer.transactions') }}" class="rounded-full border border-[#d9c7b5] bg-white px-5 py-3 text-sm font-medium text-[#2d241d]">Pelacakan Pesanan</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

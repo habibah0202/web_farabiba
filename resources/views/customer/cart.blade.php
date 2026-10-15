@@ -45,7 +45,7 @@
 
                             <div x-show="open" x-cloak class="absolute right-0 top-full z-50 mt-2 w-52 rounded-2xl border border-[#eadcc9] bg-white p-2 shadow-lg" @click.outside="open = false">
                                 <a href="{{ route('customer.profile') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] hover:bg-[#f7f1ea]">Profil Saya</a>
-                                <a href="{{ route('profile.edit') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] hover:bg-[#f7f1ea]">Edit Profil</a>
+                                <a href="{{ route('customer.profile.edit') }}" class="block rounded-xl px-3 py-2 text-sm text-[#2d241d] hover:bg-[#f7f1ea]">Edit Profil</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="block w-full rounded-xl px-3 py-2 text-left text-sm text-[#2d241d] hover:bg-[#f7f1ea]">

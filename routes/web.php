@@ -2,13 +2,25 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $products = Product::with('category')
+        ->where('status', 'active')
+        ->withAvg('reviews', 'rating')
+        ->withCount('reviews')
+        ->latest()
+        ->get();
+
+    return view('welcome', compact('products'));
+})->name('home');
+
+Route::view('/our-story', 'our-story')->name('our-story');
 
 Route::middleware(['auth', 'verified', 'active'])->group(function () {
     Route::get('/dashboard', function () {
@@ -45,6 +57,7 @@ Route::middleware(['auth', 'active'])->prefix('customer')->name('customer.')->gr
     Route::get('/search', [CustomerController::class, 'search'])->name('search');
     Route::get('/filter', [CustomerController::class, 'filter'])->name('filter');
     Route::get('/products/{product}', [CustomerController::class, 'show'])->name('products.show');
+    Route::post('/products/{product}/reviews', [ProductReviewController::class, 'store'])->name('products.reviews.store');
     Route::post('/products/{product}/cart', [CustomerController::class, 'addToCart'])->name('products.addToCart');
     Route::get('/cart', [CustomerController::class, 'cart'])->name('cart');
     Route::patch('/cart/{product}', [CustomerController::class, 'updateCart'])->name('cart.update');
@@ -54,6 +67,8 @@ Route::middleware(['auth', 'active'])->prefix('customer')->name('customer.')->gr
     Route::get('/transactions', [CustomerController::class, 'transactions'])->name('transactions');
     Route::get('/transactions/{id}', [CustomerController::class, 'transactionDetail'])->name('transactions.show');
     Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [CustomerProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [CustomerProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::middleware(['auth', 'active'])->group(function () {

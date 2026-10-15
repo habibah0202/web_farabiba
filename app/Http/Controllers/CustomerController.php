@@ -58,7 +58,18 @@ class CustomerController extends Controller
 
     public function show(Product $product): View
     {
-        return view('customer.show', compact('product'));
+        $product->load(['category', 'reviews.user'])
+            ->loadAvg('reviews', 'rating')
+            ->loadCount('reviews');
+
+        $hasPurchased = Transaction::where('user_id', Auth::id())
+            ->get(['items'])
+            ->contains(fn (Transaction $transaction) => collect($transaction->items ?? [])
+                ->contains(fn (array $item) => (int) ($item['id'] ?? 0) === $product->id));
+
+        $myReview = $product->reviews->firstWhere('user_id', Auth::id());
+
+        return view('customer.show', compact('product', 'hasPurchased', 'myReview'));
     }
 
     public function addToCart(Request $request, Product $product): RedirectResponse
@@ -230,4 +241,5 @@ class CustomerController extends Controller
     {
         return view('customer.profile');
     }
+
 }
